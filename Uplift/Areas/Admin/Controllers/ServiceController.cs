@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,9 @@ namespace Uplift.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnvironment;
 
+        [BindProperty]
+        public ServiceVM ServVM { get; set; }
+
         public ServiceController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
@@ -28,7 +32,7 @@ namespace Uplift.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            ServiceVM ServVM = new ServiceVM()
+            ServVM = new ServiceVM()
             {
                 Service = new Models.Service(),
                 CategoryList = _unitOfWork.Category.GetCategoryListForDropDown(),
@@ -41,6 +45,33 @@ namespace Uplift.Areas.Admin.Controllers
 
             return View(ServVM);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert()
+        {
+            if (ModelState.IsValid)
+            {
+                string webRootPath = _hostEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+                if (ServVM.Service.Id == 0)
+                {
+                    //New Service
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\services");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStreams);
+                    }
+                    ServVM.Service.ImageUrl = @"\images\services\" + fileName + extension;
+
+                    _unitOfWork.Service.Add(ServVM.Service);
+                }
+            }
+        }
+
 
 
         #region API Calls
