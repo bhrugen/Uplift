@@ -34,8 +34,19 @@
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Content Management
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropDown">
+                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Frequency" asp-action="Index">Frequency</a>
+                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Service" asp-action="Index">Service</a>
+                        </div>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
