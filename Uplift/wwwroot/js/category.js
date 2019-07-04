@@ -64,7 +64,3 @@ function Delete(url) {
     });
 }
 
-function ShowMessage(msg) {
-    
-}
-
