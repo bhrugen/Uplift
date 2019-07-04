@@ -16,7 +16,7 @@ function loadDataTable() {
             { "data": "name", "width": "20%" },
             { "data": "category.name", "width": "20%" },
             { "data": "price", "width": "15%" },
-            { "data": "frequency.FrequencyCount", "width": "15%" },
+            { "data": "frequency.frequencyCount", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {
