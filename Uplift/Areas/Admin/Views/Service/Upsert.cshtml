@@ -34,7 +34,7 @@
                     <label asp-for="Service.Price"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Service.Price" class="form-control" />
+                    <input asp-for="Service.Price" id="txtPrice" class="form-control" />
                     <span asp-validation-for="Service.Price" class="text-danger"></span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <label asp-for="Service.ImageUrl"></label>
                 </div>
                 <div class="col-8">
-                   <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
                 </div>
             </div>
             <div class="form-group row">
@@ -82,13 +82,42 @@
                     }
                     else
                     {
-                        //Create button and back to list
-                        <partial name="_CreateAndBackToListButton" />
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
         </div>
-
+        @if (Model.Service.Id != 0)
+        {
+            <div class="col-3">
+                <img src="@Model.Service.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+            </div>
+        }
     </div>
 
 </form>
+
+@section Scripts{ 
+    <script>
+    function validateInput() {
+        if (document.getElementById("uploadBox").value == "") {
+            swal("Error", "Please Select an Image", "error")
+            return false;
+        }
+        return true;
+            };
+
+    $(document).ready(function () {
+        if (document.getElementById('txtPrice').value == "0") {
+            document.getElementById('txtPrice').value = '';
+        }
+    });
+    </script>
+}
