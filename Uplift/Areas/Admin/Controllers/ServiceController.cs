@@ -116,6 +116,28 @@ namespace Uplift.Areas.Admin.Controllers
         {
             return Json(new { data = _unitOfWork.Service.GetAll(includeProperties: "Category,Frequency") });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var serviceFromDb = _unitOfWork.Service.Get(id);
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var imagePath = Path.Combine(webRootPath, serviceFromDb.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
+            if (serviceFromDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting." });
+            }
+
+            _unitOfWork.Service.Remove(serviceFromDb);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Deleted Successfully." });
+        }
+
         #endregion
     }
 }
