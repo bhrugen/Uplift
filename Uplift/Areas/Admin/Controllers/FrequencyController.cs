@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Uplift.DataAccess.Data.Repository.IRepository;
+using Uplift.Models;
 
 namespace Uplift.Areas.Admin.Controllers
 {
@@ -20,6 +21,51 @@ namespace Uplift.Areas.Admin.Controllers
         {
             return View();
         }
+
+
+        // GET: Contacts/Upsert/5
+        public IActionResult Upsert(int? id)
+        {
+            Frequency frequency = new Frequency();
+            if (id == null)
+            {
+
+                return View(frequency);
+            }
+
+            frequency = _unitOfWork.Frequency.Get(id.GetValueOrDefault());
+            if (frequency == null)
+            {
+                return NotFound();
+            }
+            return View(frequency);
+        }
+
+        // POST: Contacts/Upsert/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Frequency frequency)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (frequency.Id == 0)
+                {
+                    _unitOfWork.Frequency.Add(frequency);
+                }
+                else
+                {
+                    _unitOfWork.Frequency.Update(frequency);
+                }
+                _unitOfWork.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(frequency);
+
+        }
+
 
         #region API Calls
 
