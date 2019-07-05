@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uplift.DataAccess.Data.Repository.IRepository;
+using Uplift.Utility;
 
 namespace Uplift.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles =SD.Admin)]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
