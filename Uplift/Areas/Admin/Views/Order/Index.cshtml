@@ -1,0 +1,45 @@
+﻿@using Uplift.Utility
+
+
+<h1>Index</h1>
+
+<div class="border backgroundWhite p-3">
+    <div class="d-flex justify-content-between mb-3">
+        <div class="p-2">
+            <h2 class="text-primary">Order's List</h2>
+        </div>
+        <div class="p-2">
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration:none" asp-controller="Order" asp-route-status="pending" asp-action="Index">
+                    <li class="list-group-item">Pending</li>
+                </a>
+                <a style="text-decoration:none" asp-controller="Order" asp-route-status="approved" asp-action="Index">
+                    <li class="list-group-item">Approved</li>
+                </a>
+                <a style="text-decoration:none" asp-controller="Order" asp-route-status="all" asp-action="Index">
+                    <li class="list-group-item">All</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+    <br /><br />
+    <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Count</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+
+
+</div>
+
+@section Scripts{ 
+    <script src="~/js/orders.js"></script>
+}
