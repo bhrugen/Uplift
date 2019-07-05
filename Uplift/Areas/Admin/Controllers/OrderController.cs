@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Uplift.DataAccess.Data.Repository.IRepository;
+using Uplift.Utility;
 
 namespace Uplift.Areas.Admin.Controllers
 {
@@ -21,6 +22,21 @@ namespace Uplift.Areas.Admin.Controllers
         }
 
         #region API Calls
+
+        public IActionResult GetAllOrders()
+        {
+            return Json(new { data = _unitOfWork.OrderHeader.GetAll() });
+        }
+
+        public IActionResult GetAllPendingOrders()
+        {
+            return Json(new { data = _unitOfWork.OrderHeader.GetAll(filter:o=>o.Status==SD.StatusSubmitted) });
+        }
+        public IActionResult GetAllApprovedOrders()
+        {
+            return Json(new { data = _unitOfWork.OrderHeader.GetAll(filter: o => o.Status == SD.StatusApproved) });
+        }
+
         #endregion
     }
 }
