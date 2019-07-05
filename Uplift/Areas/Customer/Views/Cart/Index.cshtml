@@ -19,7 +19,29 @@
                     </div>
                 </div>
                 <div class="card-body">
-
+                    @foreach(var item in Model.ServiceList)
+                    {
+                        <div class="row">
+                            <div class="d-none d-md-block col-md-2 text-center py-2">
+                                <img src="@item.ImageUrl" class="rounded" width="100%" />
+                            </div>
+                            <div class="col-12 col-md-5 text-md-left pt-3">
+                                <h5><strong class="text-primary">@item.Name</strong></h5>
+                                <h5 class="text-secondary">$@item.Price per service</h5>
+                                <h5 class="text-secondary"><small>@item.Frequency.Name</small></h5>
+                            </div>
+                            <div class="col-12 col-md-5 row pt-3">
+                                <div class="col-6 text-md-right" style="padding-top:5px;">
+                                    <h6><strong class="text-danger">@((item.Price * item.Frequency.FrequencyCount).ToString("c"))</strong></h6>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button type="submit" class="btn btn-outline-danger" asp-action="remove" asp-route-serviceId ="@item.Id">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
