@@ -83,12 +83,39 @@
                                   </div>
                               </div>
                           </div>
+                          <div class="col-12 col-lg-5 offset-lg-1">
+                              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                  <span class="text-primary">Order Summary</span>
+                              </h4>
+                              <ul class="list-group mb-3">
+                                  @{ var total = 0.0;}
+
+                                  @foreach(var details in Model.ServiceList)
+                                  {
+                                      <li class="list-group-item d-flex justify-content-between">
+                                          <div>
+                                              <input type="hidden" asp-for="@details.Id" />
+                                              <h6 class="my-0">@details.Name</h6>
+                                              <small class="text-muted">Frequency : @details.Frequency.FrequencyCount</small>
+                                          </div>
+                                          <span class="text-muted">$@(details.Price*details.Frequency.FrequencyCount)</span>
+                                          @{ total += (details.Price * details.Frequency.FrequencyCount);}
+                                      </li>
+                                  }
+
+                                  <li class="list-group-item d-flex justify-content-between bg-light">
+                                      <small class="text-primary">Total (USD)</small>
+                                      <strong class="text-primary">$@total</strong>
+                                  </li>
+
+                              </ul>
+                          </div>
                       </div>
                   </div>
                 </div>
                 <div class="card-footer">
                     <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
-                        <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Summary</a>
+                        <button type="submit" class="btn btn-success form-control">Place Order</button>                        
                     </div>
                 </div>
             </div>
