@@ -33,6 +33,30 @@ namespace Uplift.Areas.Admin.Controllers
             return View(orderVM);
         }
 
+        public IActionResult Approve(int id)
+        {
+            var orderFromDb = _unitOfWork.OrderHeader.Get(id);
+            if (orderFromDb == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.OrderHeader.ChangeOrderStatus(id, SD.StatusApproved);
+            return View(nameof(Index));
+        }
+
+        public IActionResult Reject(int id)
+        {
+            var orderFromDb = _unitOfWork.OrderHeader.Get(id);
+            if (orderFromDb == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.OrderHeader.ChangeOrderStatus(id, SD.StatusRejected);
+            return View(nameof(Index));
+        }
+
+
+
         #region API Calls
 
         public IActionResult GetAllOrders()

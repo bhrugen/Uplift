@@ -6,5 +6,131 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+
+<form method="post">
+    @if (Model.OrderDetails.Count() > 0)
+    {
+        <br />
+        <div class="backgroundWhite container">
+            <div class="card">
+                <div class="card-header bg-dark text-light ml-0 row container">
+                    <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                        <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a asp-action="Index" asp-controller="Order" asp-area="Index" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 pb-4">
+                                <div class="row">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-primary">PickUp Details:</span>
+                                    </h4>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.Name" id="txtName" readonly type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.Phone" id="txtPhone"  readonly type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Address</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.Address" type="text" readonly  class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.City" type="text" readonly  class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Zip Code</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.ZipCode" type="text" readonly  class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.Email" type="text"  readonly class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-5 offset-lg-1">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary">Order Summary</span>
+                                </h4>
+                                <ul class="list-group mb-3">
+                                    @{ var total = 0.0;}
+
+                                    @foreach (var details in Model.OrderDetails)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <div>
+                                                <input type="hidden" asp-for="@details.Id" />
+                                                <h6 class="my-0">@details.ServiceName</h6>
+                                                <small class="text-muted">Price : @details.Price</small>
+                                            </div>
+                                         
+                                        </li>
+                                    }
+
+                                   
+
+                                </ul>
+                                @if (Model.OrderHeader.Status != SD.StatusSubmitted)
+                                {
+                                    <div class="col-12">
+                                        <button class="btn btn-outline-success disabled form-control" disabled>@Model.OrderHeader.Status</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        @if (Model.OrderHeader.Status != SD.StatusApproved && Model.OrderHeader.Status != SD.StatusRejected)
+                        {
+                            <div class="col-6 offset-md-4 col-md-4 col-lg-2 offset-lg-8">
+                                <a asp-action="Approve" asp-route-id="@Model.OrderHeader.Id" class="btn btn-success form-control">Approve</a>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2">
+                                <a asp-action="reject" asp-route-id="@Model.OrderHeader.Id" class="btn btn-danger form-control">Reject</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="backgroundWhite"> No items added to the shopping cart...</div>
+    }
+</form>
+
 
