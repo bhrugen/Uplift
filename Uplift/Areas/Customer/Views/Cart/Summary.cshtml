@@ -1,0 +1,102 @@
+﻿@model Uplift.Models.ViewModels.CartViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    @if (Model.ServiceList.Count > 0)
+    {
+        <br />
+        <div class="backgroundWhite container">
+            <div class="card">
+                <div class="card-header bg-dark text-light ml-0 row container">
+                    <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                        <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a asp-action="Index" asp-controller="Cart" asp-area="Customer" class="btn btn-outline-info form-control btn-sm">Back to Cart</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                  <div class="container rounded p-2">
+                      <div class="row">
+                          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                          <div class="col-12 col-lg-6 pb-4">
+                              <div class="row">
+                                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                      <span class="text-primary">PickUp Details:</span>
+                                  </h4>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>Name</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.Name" id="txtName" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+                                  </div>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>Phone</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.Phone" id="txtPhone" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.Phone" class="text-danger"></span>
+                                  </div>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>Address</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.Address" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.Address" class="text-danger"></span>
+                                  </div>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>City</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.City" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+                                  </div>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>Zip Code</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.ZipCode" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.ZipCode" class="text-danger"></span>
+                                  </div>
+                              </div>
+                              <div class="row my-1">
+                                  <div class="col-3">
+                                      <label>Email</label>
+                                  </div>
+                                  <div class="col-9">
+                                      <input asp-for="OrderHeader.Email" type="text" class="form-control" />
+                                      <span asp-validation-for="OrderHeader.Email" class="text-danger"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
+                        <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Summary</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="backgroundWhite"> No items added to the shopping cart...</div>
+    }
+</form>
+
