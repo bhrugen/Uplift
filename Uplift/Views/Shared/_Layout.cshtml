@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Uplift.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using Uplift.Extensions
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -50,7 +55,26 @@
                     <li class="nav-item">
                         <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-
+                    @if (HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+                    {
+                        <li style="color:white">
+                            <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link text-white">
+                                @{
+                                    var count = HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
+                                }
+                                <i class="fas fa-shopping-cart"></i>&nbsp; (@count)
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li style="color:white">
+                            <a href="#" class="nav-link text-white">
+                                
+                                <i class="fas fa-shopping-cart"></i>&nbsp; (0)
+                            </a>
+                        </li>
+                    }
                 </ul>
 
             </div>
