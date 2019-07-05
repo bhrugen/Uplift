@@ -19,8 +19,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @foreach(var item in Model.ServiceList)
+                    @{
+                        var orderTotal = 0.0;
+                    }
+
+                    @foreach (var item in Model.ServiceList)
                     {
+                        orderTotal += (item.Price * item.Frequency.FrequencyCount);
                         <div class="row">
                             <div class="d-none d-md-block col-md-2 text-center py-2">
                                 <img src="@item.ImageUrl" class="rounded" width="100%" />
@@ -35,15 +40,31 @@
                                     <h6><strong class="text-danger">@((item.Price * item.Frequency.FrequencyCount).ToString("c"))</strong></h6>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <button type="submit" class="btn btn-outline-danger" asp-action="remove" asp-route-serviceId ="@item.Id">
+                                    <button type="submit" class="btn btn-outline-danger" asp-action="remove" asp-route-serviceId="@item.Id">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
+                        <hr />
                     }
+
+                    <div class="row">
+                        <div class="col-12 text-right pr-4">
+                            <p class="text-success h5">Total (USD): &nbsp;&nbsp; $@orderTotal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
+                        <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Summary</a>
+                    </div>
                 </div>
             </div>
         </div>
+    }
+    else
+    {
+                            <div class="backgroundWhite"> No items added to the shopping cart...</div>
     }
 </form>
