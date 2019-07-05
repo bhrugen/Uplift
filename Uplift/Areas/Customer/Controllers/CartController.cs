@@ -59,6 +59,52 @@ namespace Uplift.Areas.Customer.Controllers
             return View(CartVM);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Summary")]
+        public IActionResult SummaryPOST()
+        {
+            if (HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+            {
+                List<int> sessionList = new List<int>();
+                sessionList = HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+                foreach (int serviceId in sessionList)
+                {
+                    CartVM.ServiceList.Add(_unitOfWork.Service.GetFirstOrDefault(u => u.Id == serviceId, includeProperties: "Frequency,Category"));
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(CartVM);
+            }
+            else
+            {
+                CartVM.OrderHeader.OrderDate = DateTime.Now;
+                CartVM.OrderHeader.Status = SD.StatusSubmitted;
+                CartVM.OrderHeader.ServiceCount = CartVM.ServiceList.Count;
+                _unitOfWork.OrderHeader.Add(CartVM.OrderHeader);
+                _unitOfWork.Save();
+
+                foreach(var item in CartVM.ServiceList)
+                {
+                    OrderDetails orderDetails = new OrderDetails
+                    {
+                        ServiceId = item.Id,
+                        OrderHeaderId = CartVM.OrderHeader.Id,
+                        ServiceName = item.Name,
+                        Price = item.Price
+                    };
+
+                    _unitOfWork.OrderDetails.Add(orderDetails);
+                    _unitOfWork.Save();
+                }
+
+                HttpContext.Session.SetObject(SD.SessionCart, new List<int>());
+                return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.OrderHeader.Id });
+            }
+        }
+
 
         public IActionResult Remove(int serviceId)
         {
