@@ -105,6 +105,11 @@ namespace Uplift.Areas.Customer.Controllers
             }
         }
 
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
+        }
+
 
         public IActionResult Remove(int serviceId)
         {
