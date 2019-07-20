@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Uplift.DataAccess.Data.Repository.IRepository
 {
-    interface ISP_Call : IDisposable
+    public interface ISP_Call : IDisposable
     {
         IEnumerable<T> ReturnList<T>(string procedureName, DynamicParameters param = null);
 
