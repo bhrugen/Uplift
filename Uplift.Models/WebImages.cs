@@ -11,7 +11,7 @@ namespace Uplift.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        
         public byte[] Picture { get; set; }
     }
 }
