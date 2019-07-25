@@ -29,63 +29,65 @@
 <body class="search-background">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">Uplift</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="container">
+                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">Uplift</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor01">
+                <div class="collapse navbar-collapse" id="navbarColor01">
 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-
-                    @if (User.IsInRole(SD.Manager) || User.IsInRole(SD.Admin))
-                    {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Content Management
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropDown">
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Frequency" asp-action="Index">Frequency</a>
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Service" asp-action="Index">Service</a>
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="WebImage" asp-action="Index">Image Uploader</a>
-                            @if (User.IsInRole(SD.Admin))
-                            {
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
-                            }
-                            <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Order" asp-action="Index">Order</a>
-
-                        </div>
-                    </li>
-                    }
-                       @if (HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
-                    {
-                        <li style="color:white">
-                            <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link text-white">
-                                @{
-                                    var count = HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
-                                }
-                                <i class="fas fa-shopping-cart"></i>&nbsp; (@count)
-                            </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                    }
-                    else
-                    {
-                        <li style="color:white">
-                            <a href="#" class="nav-link text-white">
-                                
-                                <i class="fas fa-shopping-cart"></i>&nbsp; (0)
-                            </a>
-                        </li>
-                    }
-                </ul>
 
+                        @if (User.IsInRole(SD.Manager) || User.IsInRole(SD.Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDown">
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Frequency" asp-action="Index">Frequency</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Service" asp-action="Index">Service</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="WebImage" asp-action="Index">Image Uploader</a>
+                                    @if (User.IsInRole(SD.Admin))
+                                    {
+                                        <a class="dropdown-item text-white" asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
+                                    }
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Order" asp-action="Index">Order</a>
+
+                                </div>
+                            </li>
+                        }
+                        @if (HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+                        {
+                            <li style="color:white">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link text-white">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
+                                    }
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (@count)
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li style="color:white">
+                                <a href="#" class="nav-link text-white">
+
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (0)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+                <partial name="_LoginPartial" />
             </div>
-            <partial name="_LoginPartial" />
         </nav>
 
         
@@ -97,9 +99,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer bg-primary text-white">
         <div class="container">
-            &copy; 2019 - Uplift - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - Uplift 
         </div>
     </footer>
 
