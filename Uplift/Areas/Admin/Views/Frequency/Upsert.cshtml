@@ -24,8 +24,8 @@
                     <label asp-for="Name"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Name" for="name" class="form-control" />
+                    <span asp-validation-for="Name" id="name" class="text-danger"></span>
 
                 </div>
             </div>
@@ -34,8 +34,8 @@
                     <label asp-for="FrequencyCount"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="FrequencyCount" class="form-control" />
-                    <span asp-validation-for="FrequencyCount" class="text-danger"></span>
+                    <input asp-for="FrequencyCount"for="count" class="form-control" />
+                    <span asp-validation-for="FrequencyCount" id="count" type="number" min="0" class="text-danger"></span>
 
                 </div>
             </div>
